@@ -91,8 +91,9 @@
 }
 
 .productCard > div > span {
-    margin: 0.5vmax;
+    margin: 0.5vmax 0.2vmax;
     font: 300 0.9vmax "Roboto";
+    transform: translateY(3px);
 }
 
 .productCard > p {
