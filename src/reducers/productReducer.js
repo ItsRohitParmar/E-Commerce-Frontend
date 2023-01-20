@@ -1,35 +1,32 @@
 import { All_PRODUCT_REQUEST, All_PRODUCT_SUCCESS, All_PRODUCT_FAIL, CLEAR_ERRORS } from "../constants/productConstants"
+import { createReducer } from "@reduxjs/toolkit"
 
-
-export const productReducer = (state = { products: [] }, action) => {
-
-    switch (action.type) {
-        case All_PRODUCT_REQUEST:
-            return {
-                loading: true,
-                products: []
-            }
-            
-        case All_PRODUCT_SUCCESS:
-            return {
-                loading: false,
-                products: action.payload.products,
-                productsCount: action.payload.productsCount,
-            }
-
-        case All_PRODUCT_FAIL:
-            return {
-                loading: false,
-                products: []
-            }
-
-        case CLEAR_ERRORS:
-            return {
-                ...state,
-                error: null,
-            }
-
-        default:
-            return state;
-    }
+const initialState = { 
+    products: [],
+    loading: false,
+    productsCount: 0,
+    error:null,
 }
+
+export const productReducer = createReducer(initialState, (builder)=> {
+
+    builder.addCase(All_PRODUCT_REQUEST, (state, action)=>{
+        state.loading = true;
+        state.products = [];
+    })
+
+    .addCase(All_PRODUCT_SUCCESS, (state, action)=>{
+        state.loading = false;
+        state.products = action.payload.products;
+        state.productsCount = action.payload.productsCount;
+    })
+
+    .addCase(All_PRODUCT_FAIL, (state, action)=>{
+        state.loading= false;
+                state.products = [];
+    })
+    
+    .addCase(CLEAR_ERRORS, (action, state)=>{
+        state.error= null;
+    })
+})
