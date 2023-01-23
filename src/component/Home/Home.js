@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 
 //This is ScrollMouse Icon from react-icons package
 import { CgMouse } from "react-icons/cg";
@@ -22,7 +22,8 @@ import Loader from '../layout/Loader/Loader.js';
 const Home = () => {
 
     const dispatch = useDispatch();
-    const { loading, error, products, productsCount } = useSelector(state => state.products)
+    const { loading, products } = useSelector(state => state.products)
+    
     useEffect(() => {
         dispatch(getProduct());
     }, [dispatch])
