@@ -1,11 +1,15 @@
-import { All_PRODUCT_REQUEST, All_PRODUCT_SUCCESS, All_PRODUCT_FAIL, CLEAR_ERRORS } from "../constants/productConstants"
+import {
+    All_PRODUCT_REQUEST,
+    All_PRODUCT_SUCCESS, 
+    All_PRODUCT_FAIL, 
+    PRODUCT_DETAILS_REQUEST,
+    PRODUCT_DETAILS_SUCCESS,
+    PRODUCT_DETAILS_FAIL,
+    CLEAR_ERRORS } from "../constants/productConstants"
 import { createReducer } from "@reduxjs/toolkit"
 
 const initialState = { 
     products: [],
-    loading: false,
-    productsCount: 0,
-    error:null,
 }
 
 export const productReducer = createReducer(initialState, (builder)=> {
@@ -22,8 +26,45 @@ export const productReducer = createReducer(initialState, (builder)=> {
     })
 
     .addCase(All_PRODUCT_FAIL, (state, action)=>{
-        state.loading= false;
-                state.products = [];
+        state.loading = false;
+        state.error = action.payload.message;
+        state.products = [];
+    })
+    
+    .addCase(CLEAR_ERRORS, (action, state)=>{
+        state.error= null;
+        return[ ...state, state.error]
+    })
+
+    .addDefaultCase((state, action) => {
+        state.products = [];
+    })
+
+})
+
+
+// ------- Product Details Reduces
+
+const initialState2 = {
+    product: [],
+    loading: false,
+    error:null,
+}
+
+export const productDetailsReducer = createReducer(initialState2, (builder)=> {
+
+    builder.addCase(PRODUCT_DETAILS_REQUEST, (state, action)=>{
+        state.loading = true;
+    })
+
+    .addCase(PRODUCT_DETAILS_SUCCESS, (state, action)=>{
+        state.loading = false;
+        state.product = action.payload.product;
+    })
+
+    .addCase(PRODUCT_DETAILS_FAIL, (state, action)=>{
+        state.loading = false;
+        state.error = action.payload.message;
     })
     
     .addCase(CLEAR_ERRORS, (action, state)=>{

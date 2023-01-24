@@ -18,15 +18,25 @@ import { useSelector, useDispatch } from "react-redux"
 // --- This is loader Component display content loading-------
 import Loader from '../layout/Loader/Loader.js';
 
+// ---importing react-toastify alert to show alert -------------------------
+import {toast} from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Home = () => {
 
     const dispatch = useDispatch();
-    const { loading, products } = useSelector(state => state.products)
+    const { loading, products, error } = useSelector(state => state.products)
     
     useEffect(() => {
-        dispatch(getProduct());
-    }, [dispatch])
+        if(error) {
+           toast.error(error);
+        }
+        else{
+            dispatch(getProduct());
+        }
+    }, [dispatch, error]);
 
     return (
         <Fragment>
