@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 import ReactStars from "react-rating-stars-component";
 
 
-const Product = ({product}) => {
+const ProductCard = ({product}) => {
+
+  // This options are for ReactStars package
   const options = {
       edit: false,
       color: "rgba(20, 20, 20, 0.1)",
@@ -12,6 +14,7 @@ const Product = ({product}) => {
       value: product.ratings,
       isHalf: true
   }
+  
   return (
     <Link className='productCard' to={`product/${product._id}`}>
         <img src={product.image[0].url} alt={product.name} />
@@ -25,4 +28,4 @@ const Product = ({product}) => {
   )
 }
 
-export default Product
+export default ProductCard

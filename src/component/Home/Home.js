@@ -4,7 +4,7 @@ import React, { Fragment, useEffect } from 'react';
 import { CgMouse } from "react-icons/cg";
 
 //This is Product Card
-import Product from "./Product.js"
+import ProductCard from "./ProductCard.js"
 
 import "./Home.css"
 
@@ -12,7 +12,7 @@ import "./Home.css"
 import MetaData from '../layout/MetaData.js';
 
 // --- getProduct is a middleware funtion of Action in Redux -----
-import { getProduct } from "../../actions/productAction"
+import { clearErrors, getProduct } from "../../actions/productAction"
 import { useSelector, useDispatch } from "react-redux"
 
 // --- This is loader Component display content loading-------
@@ -31,11 +31,10 @@ const Home = () => {
     
     useEffect(() => {
         if(error) {
-           toast.error(error);
-        }
-        else{
-            dispatch(getProduct());
-        }
+            toast.error(error);
+            dispatch(clearErrors());
+         }
+           dispatch(getProduct());
     }, [dispatch, error]);
 
     return (
@@ -65,7 +64,7 @@ const Home = () => {
                         <div className="container" id="container">
                             {products &&
                                 products.map((product) => (
-                                    <Product key={product._id} product={product} />
+                                    <ProductCard key={product._id} product={product} />
                                 ))}
                         </div>
                     </Fragment>

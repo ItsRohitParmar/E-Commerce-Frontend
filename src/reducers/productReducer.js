@@ -9,7 +9,10 @@ import {
 import { createReducer } from "@reduxjs/toolkit"
 
 const initialState = { 
+    loading: false,
     products: [],
+    productsCount: 0,
+    resultsPerPage: 0,
 }
 
 export const productReducer = createReducer(initialState, (builder)=> {
@@ -23,6 +26,8 @@ export const productReducer = createReducer(initialState, (builder)=> {
         state.loading = false;
         state.products = action.payload.products;
         state.productsCount = action.payload.productsCount;
+        state.resultsPerPage = action.payload.resultsPerPage;
+        state.filteredProductsCount = action.payload.filteredProductsCount;
     })
 
     .addCase(All_PRODUCT_FAIL, (state, action)=>{
